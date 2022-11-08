@@ -12,7 +12,6 @@
     "require": {
         "php": ">=7.0",
         "ext-swoole": "*",
-        "swoole/ide-helper": "^4.7",
         "ext-redis": ">=2.6",
         "ext-amqp": "*",
         "enqueue/amqp-ext": "^0.8",
