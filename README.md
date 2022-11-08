@@ -24,6 +24,27 @@ rabbitmq-warning使用PHP实现，配合定时计划任务，对Rabbitmq服务�
 3. redis扩展 >= 2.6
 4. amqp扩展（操作rabbitmq）
 
+
+docker安装扩展
+```
+
+RUN pecl install -o -f ev redis; \
+  rm -rf /tmp/pear \
+  && docker-php-ext-enable redis \
+  && docker-php-ext-enable ev
+
+
+# amqp
+RUN  apt-get update  --allow-releaseinfo-change  -y  && apt-get install -y librabbitmq-dev
+RUN pecl install amqp && \
+    echo "extension=amqp.so" > /usr/local/etc/php/conf.d/amqp.ini
+
+# swoole
+RUN pecl install swoole && \
+    echo "extension=swoole.so" > /usr/local/etc/php/conf.d/swoole.ini
+```
+
+
 ##### 独立安装：
 
 - 进入目录：composer install
