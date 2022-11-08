@@ -13,9 +13,9 @@ class EricRabbitmqMonitorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(
-            __DIR__.'/../config.demo.php', 'rabbitmq-monitor'
-        );
+//        $this->mergeConfigFrom(
+//            __DIR__.'/../config.demo.php', 'rabbitmq-monitor'
+//        );
     }
 
     /**

@@ -40,7 +40,6 @@ class Notice
         switch ($type) {
             case DINGDING_NOTICE:
                 $result = $this->sendDingding($data['token'], $data['title'], $data['content'], $data['isAtAll'] ?? false, $data['atMobiles'] ?? []);
-                logger()->info('notice',[$result]);
                 break;
             case EMAIL_NOTICE:
                 $this->sendEmail($data['title'], $data['content'], $data['email']);

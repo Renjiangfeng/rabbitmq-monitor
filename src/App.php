@@ -22,9 +22,9 @@ class App
      * 构造方法 - 连接MQ.
      * @param null|array $config
      */
-    public function __construct(?array $config)
+    public function __construct($config = null)
     {
-        $this->config = $config;
+        $this->config = $config?$config:GC::getInstance()->get();
     }
 
     /**

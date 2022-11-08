@@ -1,12 +1,12 @@
 ## PHP版本 - rabbitmq-monitor
 
 ### 简介
-rabbitmq-warning使用PHP实现，配合定时计划任务，对Rabbitmq服务监控预警
+rabbitmq-monitor使用PHP实现，配合定时计划任务或者supervisor，对Rabbitmq服务监控预警
 
 ### 功能实现
 1. rabbitmq服务连接是否正常
 2. rabbitmq队列是否存在消息积压
-3. 推送数据给rabbitmq队列的速度（暂未实现）
+
 
 ### 特点
 1. 使用swoole process派生子进程，对rabbitmq服务和队列的消息长度进行监控
@@ -14,8 +14,14 @@ rabbitmq-warning使用PHP实现，配合定时计划任务，对Rabbitmq服务�
 3. 当服务需要告警，可使用钉钉/邮件/短信方式预警（目前只实现了钉钉通知）。
 4. 可以单独作为服务使用，也可以与PHP框架无缝结合。
 
-### 设计模型
-![设计模型](docs/design.png)
+#### 钉钉机器人注意事项
+钉钉机器人配置(在PC端群组找智能助手添加自定义机器人)，参考地址：https://open.dingtalk.com/document/group/custom-robot-access,
+这里 自定义机器人 Webhook 的消息推送，安全设置 自定义关键词是：Error 和 Notice , Webhook 的地址复制出来，里面的access_token就是配中的
+钉钉机器人token，需要注意的是管给的调用频率是：**每个机器人每分钟最多发送20条消息到群里，如果超过20条，会限流10分钟。**
+
+![机器人设置1](src/docs/Custom.png)
+![机器人设置2](src/docs/keywords.png)
+
 
 ### 安装
 环境依赖：
@@ -50,7 +56,8 @@ RUN pecl install swoole && \
 - 进入目录：composer install
 
 ##### 接入项目：
-- composer require pupilcp/rabbitmq-warning
+- github https://github.com/Renjiangfeng/rabbitmq-monitor
+- composer require renjiangfeng/rabbitmq-monitor
 
 
 ### 使用
@@ -86,7 +93,11 @@ RUN pecl install swoole && \
 ```
 ### 启动
 由于rabbitmq-warning不是常驻进程，需使用定时计划任务配合，例： * * * * * php /PATH/server start （每分钟执行一次）
-
+参考 server 文件
 ### 支持
 swoole
 
+### laravel 安装使用：
+- composer require renjiangfeng/rabbitmq-monitor
+- 执行 php artisan vendor:publish --force --provider="Eric\EricRabbitmqMonitorServiceProvider"，config目录下会多出rabbitmq-monitor.php 文件，可以把配置写入到这里面
+- 把执行的命令封装成artisan命令，使用supervisor管理起来，参考代码laravel-command
